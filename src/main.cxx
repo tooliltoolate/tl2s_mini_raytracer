@@ -1,6 +1,11 @@
+#include <vector>
+
 import Image;
 
 int main() {
-    add(1, 2);
+    Image test {3, 3, 2, 255};
+    std::vector<int> pixels {255, 0, 0, 0, 255, 0, 0, 0, 255, 255, 255, 0, 255, 255, 255, 0, 0, 0};
+    test.set_pixels(pixels);
+    test.print_as_ppm();
     return 0;
 }

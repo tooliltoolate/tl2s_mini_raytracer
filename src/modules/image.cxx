@@ -5,10 +5,6 @@ module;
 
 export module Image;
 
-export int add(int a, int b) {
-    return a + b;
-}
-
 export class Image
 {
     const int channels, width, height, max_value;
@@ -16,6 +12,17 @@ export class Image
 public:
 
     Image(int channels, int width, int height, int max_value) : channels(channels), width(width), height(height), max_value(max_value), pixels(width * height * channels) {}
+
+    void read_pixels()
+    {
+        for (int i = 0; i < width * height * channels; i++)
+            std::cin >> pixels[i];
+    }
+
+    void set_pixels(const std::vector<int>& pixels)
+    {
+        this->pixels = pixels;
+    }
 
     void print_as_ppm() const
     {
