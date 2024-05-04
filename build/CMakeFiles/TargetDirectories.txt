@@ -1,4 +1,0 @@
-/home/ftl2/projects/cloned_repos/tl2s_mini_raytracer/build/CMakeFiles/Image.dir
-/home/ftl2/projects/cloned_repos/tl2s_mini_raytracer/build/CMakeFiles/tl2_raytracer.dir
-/home/ftl2/projects/cloned_repos/tl2s_mini_raytracer/build/CMakeFiles/edit_cache.dir
-/home/ftl2/projects/cloned_repos/tl2s_mini_raytracer/build/CMakeFiles/rebuild_cache.dir
