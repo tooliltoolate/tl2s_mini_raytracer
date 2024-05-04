@@ -13,5 +13,13 @@ target_sources(Image PUBLIC
 	FILES modules/image.cxx
 )
 
+add_library(Geometry)
+
+target_sources(Geometry PUBLIC
+	FILE_SET CXX_MODULES
+	BASE_DIRS ${CMAKE_SOURCE_DIR}/modules
+	FILES modules/geometry.cxx
+)
+
 add_executable(tl2_raytracer main.cxx)
-target_link_libraries(tl2_raytracer Image)
+target_link_libraries(tl2_raytracer Image Geometry)
