@@ -1,0 +1,14 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/tl2_raytracer.dir/main.cxx.o",
+      "requires": [
+        {
+          "logical-name": "Image"
+        }
+      ]
+    }
+  ],
+  "version": 1
+}

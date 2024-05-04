@@ -1,0 +1,12 @@
+{
+	"modules" : {},
+	"references" : 
+	{
+		"Image" : 
+		{
+			"lookup-method" : "by-name",
+			"path" : "CMakeFiles/Image.dir/Image.pcm"
+		}
+	},
+	"usages" : {}
+}

@@ -1,0 +1,21 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/tl2_raytracer.dir/modules/image.cpp.o",
+      "provides": [
+        {
+          "is-interface": true,
+          "logical-name": "Image",
+          "source-path": "/home/ftl2/projects/cloned_repos/tl2s_mini_raytracer/src/modules/image.cpp"
+        }
+      ],
+      "requires": [
+        {
+          "logical-name": "std.core"
+        }
+      ]
+    }
+  ],
+  "version": 1
+}
