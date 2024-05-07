@@ -13,7 +13,7 @@ public:
 export class Point
 {
 public:
-    int x, y;
+    double x, y;
     Point(int x, int y) : x(x), y(y) {}
 };
 

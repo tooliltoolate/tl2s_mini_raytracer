@@ -1,5 +1,6 @@
 module;
 
+#include <cstdint>
 #include <vector>
 #include <iostream>
 
@@ -8,7 +9,7 @@ export module Image;
 export class Image
 {
     const int channels, width, height, max_value;
-    std::vector<int> pixels;
+    std::vector<uint8_t> pixels;
 public:
 
     Image(int channels, int width, int height, int max_value) : channels(channels), width(width), height(height), max_value(max_value), pixels(width * height * channels) {}
@@ -19,7 +20,7 @@ public:
             std::cin >> pixels[i];
     }
 
-    void set_pixels(const std::vector<int>& pixels)
+    void set_pixels(const std::vector<uint8_t>& pixels)
     {
         this->pixels = pixels;
     }
