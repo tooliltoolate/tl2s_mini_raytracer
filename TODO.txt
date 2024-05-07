@@ -1,2 +1,7 @@
 Add tests
 Revise the Geometry module most probably
+Add coding style
+Use .gitignore
+change data types: point should be float, 
+image pixels should be uint8_t
+image should support I/O from a file
