@@ -8,7 +8,7 @@ export module Image;
 
 export class Image
 {
-    const int channels, width, height, max_value;
+    const uint8_t channels, width, height, max_value;
     std::vector<uint8_t> pixels;
 public:
 
