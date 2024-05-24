@@ -58,6 +58,8 @@ public:
 
     void set_pixels(const std::vector<uint8_t>& pixels)
     {
+        this->pixels.clear();
+        this->pixels.reserve(pixels.size() / 3);
         for (int i = 0; i < pixels.size(); i += 3)
             this->pixels.push_back(Pixel(pixels[i], pixels[i + 1], pixels[i + 2]));
     }
