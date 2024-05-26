@@ -1,21 +1,19 @@
 module;
 
-#include <cstdint>
 #include <vector>
 #include <iostream>
+#include <cstdint>
 
 export module Image;
 
 export class Pixel
 {
-    uint8_t r, g, b;
 
     public:
-    Pixel() : r(0), g(0), b(0) {}
+    uint8_t r, g, b;
+
+    Pixel() {}
     Pixel(uint8_t r, uint8_t g, uint8_t b) : r(r), g(g), b(b) {}
-    Pixel(uint8_t& r, uint8_t& g, uint8_t& b) : r(r), g(g), b(b) {}
-    Pixel(Pixel& input) {}
-    Pixel(const Pixel& input) {}
 
     friend std::istream& operator>>(std::istream& is, Pixel& pixel)
     {
@@ -24,12 +22,12 @@ export class Pixel
     }
     friend std::ostream& operator<<(std::ostream& os, Pixel& pixel)
     {
-        os << pixel.r << " " << pixel.g << " " << pixel.b;
+        os << static_cast<unsigned int>(pixel.r) << " " << static_cast<unsigned int>(pixel.g) << " " << static_cast<unsigned int>(pixel.b);
         return os;
     }
     friend std::ostream& operator<<(std::ostream& os, const Pixel& pixel)
     {
-        os << pixel.r << " " << pixel.g << " " << pixel.b;
+        os << static_cast<unsigned int>(pixel.r) << " " << static_cast<unsigned int>(pixel.g) << " " << static_cast<unsigned int>(pixel.b);
         return os;
     }
 };
@@ -37,9 +35,9 @@ export class Pixel
 
 export class Image
 {
-    const uint8_t width, height, max_value;
-    std::vector<Pixel> pixels;
 public:
+    std::vector<Pixel> pixels;
+    const uint8_t width, height, max_value;
 
     Image(int width, int height, int max_value, const std::vector<Pixel>& pixels) : width(width), height(height), max_value(max_value), pixels(pixels) {}
 
@@ -66,7 +64,7 @@ public:
 
     void print_as_ppm() const
     {
-        std::cout << "P" << 3 << "\n" << width << " " << height << "\n" << max_value << "\n";
+        std::cout << "P3" << "\n" << static_cast<unsigned int>(width) << " " << static_cast<unsigned int>(height) << "\n" << static_cast<unsigned int>(max_value) << "\n";
             for (int i = 0; i < width * height; i++)
             {
                     std::cout << pixels[i] << "\n";

@@ -1,4 +1,3 @@
-#include <cstdint>
 #include <vector>
 
 import Image;
