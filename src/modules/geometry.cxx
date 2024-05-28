@@ -1,20 +1,25 @@
 module;
 
+
 export module Geometry;
 
-export class Vector_2d
+export struct Vector_2d
 {
-public:
     double x, y;
+    Vector_2d () = default;
     Vector_2d(double x, double y) : x(x), y(y) {}
 
+} Vector_2d, Point;
+
+export struct Vector_3d : Vector_2d
+{
+    double z;
+    Vector_3d(double x, double y, double z) : z(z) { x = x; y = y;}
+    Vector_3d(Vector_2d v, double z) : z(z) { x = v.x; y = v.y; }
 };
 
-export typedef Vector_2d Point;
-
-export class Ray
+export struct Ray
 {
-public:
     Point origin;
     Vector_2d velocity;
 
