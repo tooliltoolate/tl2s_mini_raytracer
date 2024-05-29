@@ -5,6 +5,7 @@ import Image;
 #include <gtest/gtest.h>
 #include <cstdint>
 #include <vector>
+#include <iostream>
 
 class ImageTest : public testing::Test {
     protected:
@@ -14,6 +15,7 @@ class ImageTest : public testing::Test {
   // Class members declared here can be used by all tests in the test suite
   // for Foo.
     Image test_image {3, 2, 255};
+    Pixel empty_pixel;
     std::vector<uint8_t> wikipedia {255, 0, 0, 0, 255, 0, 0, 0, 255, 255, 255, 0, 255, 255, 255, 0, 0, 0};
     std::vector<uint8_t> all_white_3 {0,0,0,0,0,0,0,0,0};
     std::vector<uint8_t> all_black_3 {255,255,255,255,255,255,255,255,255};
@@ -39,6 +41,27 @@ TEST_F(ImageTest, set_pixels_doesnt_explode) {
         EXPECT_EQ(pixel.r, all_random_3[i]) << i << "th Pixel's r: " << pixel.r << " Expected Value: " << all_random_3[i] << std::endl;
         EXPECT_EQ(pixel.g, all_random_3[i+1]) << i << "th Pixel's g: " << pixel.g << " Expected Value: " << all_random_3[i+1] << std::endl;
         EXPECT_EQ(pixel.b, all_random_3[i+2]) << i << "th Pixel's b: " << pixel.b << " Expected Value: " << all_random_3[i+2] << std::endl;
+        i+=3;
+    }
+}
+
+TEST_F(ImageTest, pixel_cin_works) {
+    Pixel pixel;
+    std::istringstream input("255 0 0");
+    input >> pixel;
+    EXPECT_EQ(pixel.r, 255);
+    EXPECT_EQ(pixel.g, 0);
+    EXPECT_EQ(pixel.b, 0);
+}
+
+TEST_F(ImageTest, image_pixels_constructor_works) {
+    Image image(3, 2, 255, wikipedia);
+    int i = 0;
+    for (const Pixel& pixel : image.pixels)
+    {
+        EXPECT_EQ(pixel.r, wikipedia[i]) << i << "th Pixel's r: " << pixel.r << " Expected Value: " << wikipedia[i] << std::endl;
+        EXPECT_EQ(pixel.g, wikipedia[i+1]) << i << "th Pixel's g: " << pixel.g << " Expected Value: " << wikipedia[i+1] << std::endl;
+        EXPECT_EQ(pixel.b, wikipedia[i+2]) << i << "th Pixel's b: " << pixel.b << " Expected Value: " << wikipedia[i+2] << std::endl;
         i+=3;
     }
 }
