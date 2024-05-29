@@ -8,6 +8,7 @@ module;
 #include <string>
 #include <filesystem>
 #include <fstream>
+#include <stdexcept>
 
 export module Image;
 
@@ -75,7 +76,7 @@ public:
         unsigned int w, h;
         unsigned int error = lodepng::decode(image, w, h, filename, LCT_RGB, 8);
         if (error)
-            std::cout << "decoder error " << error << ": " << lodepng_error_text(error) << std::endl;
+            throw std::runtime_error("decoder error " + std::to_string(error) + ": " + lodepng_error_text(error));
         else{
             get_width() = w;
             get_height() = h;
@@ -113,8 +114,7 @@ public:
                     ppm_file << pixels[i] << "\n";
             }
         }
-        else {
-            std::cout << "Error: could not open file" << std::endl;
-        }
+        else
+            throw std::runtime_error("Could not open file " + path);
     }
 };
