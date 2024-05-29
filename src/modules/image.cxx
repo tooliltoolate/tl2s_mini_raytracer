@@ -1,7 +1,7 @@
 //use lodepng, and (maybe do smth about the alpha channel)
 module;
 
-#include "lodepng.h"
+#include "../third_party/lodepng.h"
 #include <vector>
 #include <iostream>
 #include <cstdint>

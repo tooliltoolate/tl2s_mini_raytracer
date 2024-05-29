@@ -29,12 +29,12 @@ target_sources(Geometry PUBLIC
 	FILES modules/geometry.cxx
 )
 
-add_executable(tl2_raytracer main.cxx modules/lodepng.cpp)
+add_executable(tl2_raytracer main.cxx third_party/lodepng.cpp)
 target_link_libraries(tl2_raytracer Image Geometry)
 
 enable_testing()
 
-add_executable(image_test image_test.cxx modules/lodepng.cpp)
+add_executable(image_test image_test.cxx third_party/lodepng.cpp)
 target_link_libraries(image_test GTest::gtest_main Image)
 
 include(GoogleTest)
