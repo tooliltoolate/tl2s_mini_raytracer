@@ -6,6 +6,8 @@ module;
 #include <iostream>
 #include <cstdint>
 #include <string>
+#include <filesystem>
+#include <fstream>
 
 export module Image;
 
@@ -67,7 +69,7 @@ public:
     }
 
     void
-    read_png(const char* filename)
+    read_png(std::string filename)
     {
         std::vector<unsigned char> image;
         unsigned int w, h;
@@ -107,5 +109,22 @@ public:
             {
                     std::cout << pixels[i] << "\n";
             }
+    }
+
+    void
+    save_as_ppm(std::string path) const
+    {
+        std::filesystem::path p = path;
+        std::ofstream ppm_file(path);
+        if (ppm_file.is_open()){
+        ppm_file  << "P3" << "\n" << std::to_string(width) << " " << std::to_string(height) << "\n" << std::to_string(max_value) << "\n";
+            for (int i = 0; i < width * height; i++)
+            {
+                    ppm_file << pixels[i] << "\n";
+            }
+        }
+        else {
+            std::cout << "Error: could not open file" << std::endl;
+        }
     }
 };

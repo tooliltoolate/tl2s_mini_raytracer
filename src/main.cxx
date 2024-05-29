@@ -1,12 +1,11 @@
-#include <vector>
-#include <cstdint>
+#include <string>
 
 import Image;
 
 int main() {
     Image test {255, 255, 255};
-    const char* path = "../src/test.png";
+    std::string path = "../src/test.png";
     test.read_png(path);
-    test.print_as_ppm();
+    test.save_as_ppm("try2.ppm");
     return 0;
 }
