@@ -102,16 +102,6 @@ public:
     }
 
     void
-    print_as_ppm() const
-    {
-        std::cout << "P3" << "\n" << std::to_string(width) << " " << std::to_string(height) << "\n" << std::to_string(max_value) << "\n";
-            for (int i = 0; i < width * height; i++)
-            {
-                    std::cout << pixels[i] << "\n";
-            }
-    }
-
-    void
     save_as_ppm(std::string path) const
     {
         std::filesystem::path p = path;
