@@ -9,7 +9,9 @@ export struct Vector_2d
     Vector_2d () = default;
     Vector_2d(double x, double y) : x(x), y(y) {}
 
-} Vector_2d, Point;
+};
+
+export typedef Vector_2d Point;
 
 export struct Vector_3d : Vector_2d
 {

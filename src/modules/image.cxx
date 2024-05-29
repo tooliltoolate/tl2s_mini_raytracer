@@ -1,5 +1,7 @@
+//use lodepng, and (maybe do smth about the alpha channel)
 module;
 
+#include "lodepng.h"
 #include <vector>
 #include <iostream>
 #include <cstdint>
@@ -38,10 +40,12 @@ export class Image
 {
 public:
     std::vector<Pixel> pixels;
-    const uint8_t width, height, max_value;
+    const uint8_t  max_value;
+    unsigned int width, height;
 
-    Image(int width, int height, int max_value, const std::vector<Pixel>& pixels) : width(width), height(height), max_value(max_value), pixels(pixels) {}
-    Image(int width, int height, int max_value, const std::vector<uint8_t>& pixels) : width(width), height(height), max_value(max_value) {
+    Image(unsigned int width, unsigned int height, uint8_t max_value, const std::vector<Pixel>& pixels) : width(width), height(height), max_value(max_value), pixels(pixels) {}
+
+    Image(unsigned int width, unsigned int height, uint8_t max_value, const std::vector<uint8_t>& pixels) : width(width), height(height), max_value(max_value) {
         this->pixels.reserve(pixels.size() / 3);
         for (int i = 0; i < pixels.size(); i += 3)
             this->pixels.push_back(Pixel(pixels[i], pixels[i + 1], pixels[i + 2]));
@@ -50,11 +54,34 @@ public:
 
     Image(int width, int height, int max_value) : width(width), height(height), max_value(max_value) {}
 
-    void
-    read_pixels()
+    unsigned int&
+    get_width()
     {
-        for (int i = 0; i < width * height * 3; i++)
-            std::cin >> pixels[i];
+        return width;
+    }
+
+    unsigned int&
+    get_height()
+    {
+        return height;
+    }
+
+    void
+    read_png(const char* filename)
+    {
+        std::vector<unsigned char> image;
+        unsigned int w, h;
+        unsigned int error = lodepng::decode(image, w, h, filename, LCT_RGB, 8);
+        if (error)
+            std::cout << "decoder error " << error << ": " << lodepng_error_text(error) << std::endl;
+        else{
+            get_width() = w;
+            get_height() = h;
+            pixels.clear();
+            pixels.reserve(width * height);
+            for (int i = 0; i < width * height * 3; i += 3)
+                pixels.push_back(Pixel(image[i], image[i + 1], image[i + 2]));
+        }
     }
 
     void
