@@ -43,8 +43,10 @@ export class Image
 {
 public:
     std::vector<Pixel> pixels;
-    const uint8_t  max_value;
+    uint8_t  max_value;
     unsigned int width, height;
+
+    Image() : max_value(255), width(16), height(16) {}
 
     Image(unsigned int width, unsigned int height, uint8_t max_value, const std::vector<Pixel>& pixels) : width(width), height(height), max_value(max_value), pixels(pixels) {}
 
