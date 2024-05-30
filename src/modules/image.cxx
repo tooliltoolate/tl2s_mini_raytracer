@@ -109,14 +109,15 @@ public:
     {
         std::filesystem::path p = path;
         std::ofstream ppm_file(path);
-        if (ppm_file.is_open()){
-        ppm_file  << "P3" << "\n" << std::to_string(width) << " " << std::to_string(height) << "\n" << std::to_string(max_value) << "\n";
-            for (int i = 0; i < width * height; i++)
-            {
-                    ppm_file << pixels[i] << "\n";
-            }
-        }
-        else
+        if (!ppm_file.is_open()){
             throw std::runtime_error("Could not open file " + path);
+        }
+        else {
+            ppm_file  << "P3" << "\n" << std::to_string(width) << " " << std::to_string(height) << "\n" << std::to_string(max_value) << "\n";
+                for (int i = 0; i < width * height; i++)
+                {
+                        ppm_file << pixels[i] << "\n";
+                }
+        }
     }
 };
