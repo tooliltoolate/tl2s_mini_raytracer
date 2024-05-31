@@ -1,30 +1,46 @@
 module;
 
+#include <vector>
+#include <cstdint>
+
+template<typename T>
+concept Number = std::integral<T> || std::floating_point<T>;
 
 export module Geometry;
 
-export struct Vector_2d
+export template<Number Component_type, std::unsigned_integral auto _dimensions>
+struct Vector
 {
-    double x, y;
-    Vector_2d () = default;
-    Vector_2d(double x, double y) : x(x), y(y) {}
-
+    std::vector<Component_type> components{};
+    constexpr static auto dimensions = _dimensions;
 };
 
-export typedef Vector_2d Point;
+export template<Number Component_type>
+using Vector_2d = Vector<Component_type, (uint8_t)2>;
 
-export struct Vector_3d : Vector_2d
+export template<Number Component_type>
+using Vector_3d = Vector<Component_type, (uint8_t)3>;
+
+export template<Number Coordinate_type, std::unsigned_integral auto _dimensions>
+struct Point
 {
-    double z;
-    Vector_3d(double x, double y, double z) : z(z) { x = x; y = y;}
-    Vector_3d(Vector_2d v, double z) : z(z) { x = v.x; y = v.y; }
+    std::vector<Coordinate_type> coordinates{};
+    constexpr static auto dimensions = _dimensions;
 };
 
-export struct Ray
-{
-    Point origin;
-    Vector_2d velocity;
+export template<Number Component_type>
+using Point_2d = Point<Component_type, (uint8_t)2>;
 
-    Ray(Point origin, Vector_2d velocity) : origin(origin), velocity(velocity) {}
-    Point at(double t) const { return Point(origin.x + t * velocity.x, origin.y + t * velocity.y); }
+export template<Number Component_type>
+using Point_3d = Point<Component_type, (uint8_t)3>;
+
+export template<Number Coordinate_type>
+struct Ray
+{
+    Point_3d<Coordinate_type> origin;
+    Vector_3d<Coordinate_type> velocity;
+
+    Point_3d<Coordinate_type> at(Number auto t) const {
+        return Point_3d<Coordinate_type>{ .coordinates = origin.coordinates + velocity.components * t, .dimensions = (uint8_t)3}; 
+    }
 };
