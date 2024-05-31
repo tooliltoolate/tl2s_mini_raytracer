@@ -16,27 +16,27 @@ concept Numerical = std::integral<T> || std::floating_point<T>;
 export module Image;
 
 //shadows or smth
-export template<Numerical Value_type, std::unsigned_integral auto _dimensions>
+export template<Numerical Value_type, std::unsigned_integral auto Dimensions>
 struct Pixel
 {
     std::vector<Value_type> values{};
-    constexpr static auto dimensions = _dimensions;
+    constexpr static auto dimensions = Dimensions;
 
-    friend std::istream& operator>>(std::istream& is, Pixel<Value_type, _dimensions>& pixel)
+    friend std::istream& operator>>(std::istream& is, Pixel<Value_type, Dimensions>& pixel)
     {
-        for (int i = 0; i < _dimensions; i++)
+        for (int i = 0; i < Dimensions; i++)
             is >> pixel.values[i];
         return is;
     }
-    friend std::ostream& operator<<(std::ostream& os, Pixel<Value_type, _dimensions>& pixel)
+    friend std::ostream& operator<<(std::ostream& os, Pixel<Value_type, Dimensions>& pixel)
     {
-        for (int i = 0; i < _dimensions; i++)
+        for (int i = 0; i < Dimensions; i++)
             os << +(pixel.values[i]) << " ";
         return os;
     }
-    friend std::ostream& operator<<(std::ostream& os, const Pixel<Value_type, _dimensions>& pixel)
+    friend std::ostream& operator<<(std::ostream& os, const Pixel<Value_type, Dimensions>& pixel)
     {
-        for (int i = 0; i < _dimensions; i++)
+        for (int i = 0; i < Dimensions; i++)
             os << +(pixel.values[i]) << " ";
         return os;
     }
