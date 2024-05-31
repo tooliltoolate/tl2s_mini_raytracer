@@ -13,6 +13,13 @@ module;
 template<typename T>
 concept Numerical = std::integral<T> || std::floating_point<T>;
 
+enum ImageFormat
+{
+    PBM = 1,
+    PGM = 2,
+    PPM = 3
+};
+
 export module Image;
 
 //shadows or smth
@@ -105,8 +112,7 @@ struct Image
         }
     }
 
-    //1 for pbm, 2 for pgm, 3 for ppm
-    template<uint8_t filetype>
+    template<ImageFormat filetype>
     void
     save_as_file(std::string path) const
     {
