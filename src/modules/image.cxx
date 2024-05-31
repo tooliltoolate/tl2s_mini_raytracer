@@ -95,7 +95,7 @@ struct Image
     set_pixels(const std::vector<uint8_t>& pixels)
     {
         this->pixels.clear();
-        this->pixels.reserve((pixels.size() + channels - 1) / channels);
+        this->pixels.reserve((pixels.size() + channels) / channels);
         for (int i = 0; i < pixels.size(); i += channels){
             Pixel<Value_type, channels> p;
             for (int j = 0; j < channels; j++) {

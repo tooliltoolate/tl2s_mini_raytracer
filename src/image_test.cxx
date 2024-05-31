@@ -56,35 +56,28 @@ class ImageTest : public testing::Test {
 };
 
 TEST_F(ImageTest, set_pixels_doesnt_explode) {
-    for (int j = 0; j < 10; j++)
-    {
         test_image.set_pixels(random_pixels);
         int i = 0;
         for (const Pixel<uint8_t, (uint8_t)3>& pixel : test_image.pixels)
         {
-            EXPECT_EQ(pixel.values[i], random_pixels[i]) << i << "th Pixel's r: " << pixel.values[i] << " Expected Value: " << random_pixels[i] << std::endl;
-            EXPECT_EQ(pixel.values[i + 1], random_pixels[i+1]) << i << "th Pixel's g: " << pixel.values[i + 1] << " Expected Value: " << random_pixels[i+1] << std::endl;
-            EXPECT_EQ(pixel.values[i + 2], random_pixels[i+2]) << i << "th Pixel's b: " << pixel.values[i + 2] << " Expected Value: " << random_pixels[i+2] << std::endl;
+            EXPECT_EQ(pixel.values[0], random_pixels[i]) << i << "th Pixel's r: " << pixel.values[0] << " Expected Value: " << random_pixels[i] << std::endl;
+            EXPECT_EQ(pixel.values[0 + 1], random_pixels[i+1]) << i << "th Pixel's g: " << pixel.values[0 + 1] << " Expected Value: " << random_pixels[i+1] << std::endl;
+            EXPECT_EQ(pixel.values[0 + 2], random_pixels[i+2]) << i << "th Pixel's b: " << pixel.values[0 + 2] << " Expected Value: " << random_pixels[i+2] << std::endl;
             i+=3;
         }
-        for (int c = 0; c < width * height * 3; c++) {
-            random_pixels.push_back(random_uint8_t());
-        }
-    }
 }
 
 TEST_F(ImageTest, read_png_works){
-    unsigned _width, _height;
     std::vector<unsigned char> random_image;
-    lodepng::encode(random_image, random_pixels, _width, _height, LCT_RGB);
+    lodepng::encode(random_image, random_pixels, width, height, LCT_RGB);
     lodepng::save_file(random_image, "random_image.png");
     test_image.read_png("random_image.png");
     int i = 0;
     for (const Pixel<uint8_t, (uint8_t)3>& pixel : test_image.pixels)
     {
-        EXPECT_EQ(pixel.values[i], random_pixels[i]) << i << "th Pixel's r: " << pixel.values[i] << " Expected Value: " << random_pixels[i] << std::endl;
-        EXPECT_EQ(pixel.values[i + 1], random_pixels[i+1]) << i << "th Pixel's g: " << pixel.values[i + 1] << " Expected Value: " << random_pixels[i+1] << std::endl;
-        EXPECT_EQ(pixel.values[i + 2], random_pixels[i+2]) << i << "th Pixel's b: " << pixel.values[i + 2] << " Expected Value: " << random_pixels[i+2] << std::endl;
+        EXPECT_EQ(pixel.values[0], random_pixels[i]) << i << "th Pixel's r: " << pixel.values[0] << " Expected Value: " << random_pixels[i] << std::endl;
+        EXPECT_EQ(pixel.values[0 + 1], random_pixels[i+1]) << i << "th Pixel's g: " << pixel.values[0 + 1] << " Expected Value: " << random_pixels[i+1] << std::endl;
+        EXPECT_EQ(pixel.values[0 + 2], random_pixels[i+2]) << i << "th Pixel's b: " << pixel.values[0 + 2] << " Expected Value: " << random_pixels[i+2] << std::endl;
         i+=3;
     }
 }
