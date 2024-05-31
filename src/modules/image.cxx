@@ -10,54 +10,45 @@ module;
 #include <fstream>
 #include <stdexcept>
 
+template<typename T>
+concept Number = std::integral<T> || std::floating_point<T>;
+
 export module Image;
 
-export class Pixel
+//shadows or smth
+export template<Number Value_type, std::unsigned_integral auto _dimensions>
+struct Pixel
 {
+    std::vector<Value_type> values{};
+    constexpr static auto dimensions = _dimensions;
 
-    public:
-    uint8_t r, g, b;
-
-    Pixel() {}
-    Pixel(uint8_t r, uint8_t g, uint8_t b) : r(r), g(g), b(b) {}
-
-    friend std::istream& operator>>(std::istream& is, Pixel& pixel)
+    friend std::istream& operator>>(std::istream& is, Pixel<Value_type, _dimensions>& pixel)
     {
-        is >> pixel.r >> pixel.g >> pixel.b;
+        for (int i = 0; i < _dimensions; i++)
+            is >> pixel.values[i];
         return is;
     }
-    friend std::ostream& operator<<(std::ostream& os, Pixel& pixel)
+    friend std::ostream& operator<<(std::ostream& os, Pixel<Value_type, _dimensions>& pixel)
     {
-        os << std::to_string(pixel.r) << " " << std::to_string(pixel.g) << " " << std::to_string(pixel.b);
+        for (int i = 0; i < _dimensions; i++)
+            os << +(pixel.values[i]) << " ";
         return os;
     }
-    friend std::ostream& operator<<(std::ostream& os, const Pixel& pixel)
+    friend std::ostream& operator<<(std::ostream& os, const Pixel<Value_type, _dimensions>& pixel)
     {
-        os << std::to_string(pixel.r) << " " << std::to_string(pixel.g) << " " << std::to_string(pixel.b);
+        for (int i = 0; i < _dimensions; i++)
+            os << +(pixel.values[i]) << " ";
         return os;
     }
 };
 
-
-export class Image
+export template<Number Value_type, std::unsigned_integral auto channels>
+struct Image
 {
-public:
-    std::vector<Pixel> pixels;
-    uint8_t  max_value;
-    unsigned int width, height;
-
-    Image() : max_value(255), width(16), height(16) {}
-
-    Image(unsigned int width, unsigned int height, uint8_t max_value, const std::vector<Pixel>& pixels) : width(width), height(height), max_value(max_value), pixels(pixels) {}
-
-    Image(unsigned int width, unsigned int height, uint8_t max_value, const std::vector<uint8_t>& pixels) : width(width), height(height), max_value(max_value) {
-        this->pixels.reserve(pixels.size() / 3);
-        for (int i = 0; i < pixels.size(); i += 3)
-            this->pixels.push_back(Pixel(pixels[i], pixels[i + 1], pixels[i + 2]));
-    
-    }
-
-    Image(int width, int height, int max_value) : width(width), height(height), max_value(max_value) {}
+    unsigned int width{};
+    unsigned int height{};
+    unsigned int max_value{};
+    std::vector<Pixel<Value_type, channels>> pixels{};
 
     unsigned int&
     get_width()
@@ -84,13 +75,18 @@ public:
             get_height() = h;
             pixels.clear();
             pixels.reserve(width * height);
-            for (int i = 0; i < width * height * 3; i += 3)
-                pixels.push_back(Pixel(image[i], image[i + 1], image[i + 2]));
+            for (int i = 0; i < width * height * channels; i+=channels){
+                Pixel<Value_type, channels> p;
+                for (int j = 0; j < channels; j++) {
+                    p.values.push_back(image[i + j]);
+                }
+                pixels.push_back(p);
+            }
         }
     }
 
     void
-    set_pixels(const std::vector<Pixel>& pixels)
+    set_pixels(const std::vector<Pixel<Value_type, channels>>& pixels)
     {
         this->pixels = pixels;
     }
@@ -99,25 +95,51 @@ public:
     set_pixels(const std::vector<uint8_t>& pixels)
     {
         this->pixels.clear();
-        this->pixels.reserve(pixels.size() / 3);
-        for (int i = 0; i < pixels.size(); i += 3)
-            this->pixels.push_back(Pixel(pixels[i], pixels[i + 1], pixels[i + 2]));
+        this->pixels.reserve((pixels.size() + channels - 1) / channels);
+        for (int i = 0; i < pixels.size(); i += channels){
+            Pixel<Value_type, channels> p;
+            for (int j = 0; j < channels; j++) {
+                p.values.push_back(pixels[i + j]);
+            }
+            this->pixels.push_back(p);
+        }
     }
 
+    //1 for pbm, 2 for pgm, 3 for ppm
+    template<uint8_t filetype>
     void
-    save_as_ppm(std::string path) const
+    save_as_file(std::string path) const
     {
         std::filesystem::path p = path;
-        std::ofstream ppm_file(path);
-        if (!ppm_file.is_open()){
+        std::ofstream file(path);
+        if (!file.is_open()){
             throw std::runtime_error("Could not open file " + path);
         }
         else {
-            ppm_file  << "P3" << "\n" << std::to_string(width) << " " << std::to_string(height) << "\n" << std::to_string(max_value) << "\n";
-                for (int i = 0; i < width * height; i++)
-                {
-                        ppm_file << pixels[i] << "\n";
-                }
+            file << "P" << std::to_string(filetype) << std::endl;
+            file << std::to_string(width) << " " << std::to_string(height) << std::endl;
+            if constexpr (filetype > 1){
+                file << std::to_string(max_value) << std::endl;
+            }
+            for (int i = 0; i < width * height; i++)
+            {
+                    file << pixels[i] << std::endl;
+            }
+        }
+    }
+
+    template<uint8_t filetype>
+    void
+    print_as_file() const
+    {
+        std::cout << "P" << std::to_string(filetype) << std::endl;
+        std::cout << std::to_string(width) << " " << std::to_string(height) << std::endl;
+        if constexpr (filetype > 1){
+            std::cout << std::to_string(max_value) << std::endl;
+        }
+        for (int i = 0; i < width * height; i++)
+        {
+                std::cout << pixels[i] << "\n";
         }
     }
 };
