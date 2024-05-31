@@ -127,19 +127,4 @@ struct Image
             }
         }
     }
-
-    template<uint8_t filetype>
-    void
-    print_as_file() const
-    {
-        std::cout << "P" << std::to_string(filetype) << std::endl;
-        std::cout << std::to_string(width) << " " << std::to_string(height) << std::endl;
-        if constexpr (filetype > 1){
-            std::cout << std::to_string(max_value) << std::endl;
-        }
-        for (int i = 0; i < width * height; i++)
-        {
-                std::cout << pixels[i] << "\n";
-        }
-    }
 };
