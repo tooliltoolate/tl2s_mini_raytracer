@@ -11,12 +11,12 @@ module;
 #include <stdexcept>
 
 template<typename T>
-concept Number = std::integral<T> || std::floating_point<T>;
+concept Numerical = std::integral<T> || std::floating_point<T>;
 
 export module Image;
 
 //shadows or smth
-export template<Number Value_type, std::unsigned_integral auto _dimensions>
+export template<Numerical Value_type, std::unsigned_integral auto _dimensions>
 struct Pixel
 {
     std::vector<Value_type> values{};
@@ -42,7 +42,7 @@ struct Pixel
     }
 };
 
-export template<Number Value_type, std::unsigned_integral auto channels>
+export template<Numerical Value_type, std::unsigned_integral auto channels>
 struct Image
 {
     unsigned int width{};
