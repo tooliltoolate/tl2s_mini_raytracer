@@ -37,5 +37,9 @@ enable_testing()
 add_executable(image_test image_test.cxx third_party/lodepng.cpp)
 target_link_libraries(image_test GTest::gtest_main Image)
 
+add_executable(geometry_test geometry_test.cxx)
+target_link_libraries(geometry_test GTest::gtest_main Geometry)
+
 include(GoogleTest)
 gtest_discover_tests(image_test)
+gtest_discover_tests(geometry_test)

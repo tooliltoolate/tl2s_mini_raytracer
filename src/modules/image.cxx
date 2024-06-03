@@ -10,17 +10,19 @@ module;
 #include <fstream>
 #include <stdexcept>
 
-template<typename T>
+
+
+export module Image;
+
+export template<typename T>
 concept Numerical = std::integral<T> || std::floating_point<T>;
 
-enum ImageFormat
+export enum Image_format
 {
     PBM = 1,
     PGM = 2,
     PPM = 3
 };
-
-export module Image;
 
 //shadows or smth
 export template<Numerical Value_type, std::unsigned_integral auto Dimensions>
@@ -112,7 +114,7 @@ struct Image
         }
     }
 
-    template<ImageFormat filetype>
+    template<Image_format filetype>
     void
     save_as_file(std::string path) const
     {
