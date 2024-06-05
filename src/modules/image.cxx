@@ -121,16 +121,14 @@ struct Image
         if (!file.is_open()){
             throw std::runtime_error("Could not open file " + path);
         }
-        else {
-            file << "P" << std::to_string(filetype) << std::endl;
-            file << std::to_string(width) << " " << std::to_string(height) << std::endl;
-            if constexpr (filetype > 1){
-                file << std::to_string(max_value) << std::endl;
-            }
-            for (int i = 0; i < width * height; i++)
-            {
-                    file << pixels[i] << std::endl;
-            }
+        file << "P" << std::to_string(filetype) << std::endl;
+        file << std::to_string(width) << " " << std::to_string(height) << std::endl;
+        if constexpr (filetype > 1){
+            file << std::to_string(max_value) << std::endl;
+        }
+        for (int i = 0; i < width * height; i++)
+        {
+                file << pixels[i] << std::endl;
         }
     }
 };
