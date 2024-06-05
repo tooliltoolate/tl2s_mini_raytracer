@@ -16,7 +16,7 @@ struct Vector
 {
     std::valarray<Component_type> components = std::valarray<Component_type>(Dimensions);
     constexpr static auto dimensions = Dimensions;
-    Component_type& operator[](std::integral auto i){
+    Numerical auto& operator[](std::integral auto i){
         return components[i];
     }
     Vector<Component_type, Dimensions>& operator+(const Vector<Component_type, Dimensions>& v) const {
@@ -59,7 +59,7 @@ struct Point
     std::valarray<Coordinate_type> coordinates = std::valarray<Coordinate_type>(Dimensions);
     constexpr static auto dimensions = Dimensions;
 
-    Coordinate_type& operator[](std::integral auto i){
+    Numerical auto& operator[](std::integral auto i){
         return coordinates[i];
     }
     Point<Coordinate_type, Dimensions>& operator+(const Vector<Coordinate_type, Dimensions>& v) const {

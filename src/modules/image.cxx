@@ -1,4 +1,3 @@
-//use lodepng, and (maybe do smth about the alpha channel)
 module;
 
 #include "../third_party/lodepng.h"
@@ -24,7 +23,6 @@ export enum Image_format
     PPM = 3
 };
 
-//shadows or smth
 export template<Numerical Value_type, std::unsigned_integral auto Dimensions>
 struct Pixel
 {
