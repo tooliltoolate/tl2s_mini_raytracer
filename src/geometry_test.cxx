@@ -51,8 +51,6 @@ class GeometryTest : public testing::Test {
         {  
             random_int = Rand_number<int>(0, 300);
             random_float = Rand_number<float>(0, 300);
-            random_int.seed(std::chrono::system_clock::now().time_since_epoch().count());
-            random_float.seed(std::chrono::system_clock::now().time_since_epoch().count());
             for(int i = 0; i < 3; i++){
                 random_point_f[i] = random_float();
             }

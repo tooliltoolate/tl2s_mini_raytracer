@@ -35,8 +35,6 @@ class ImageTest : public testing::Test {
         {
             random_uint8_t = Rand_int(0, 255);
             random_image_dimension = Rand_int(1, 255);
-            random_uint8_t.seed(std::chrono::system_clock::now().time_since_epoch().count());
-            random_image_dimension.seed(std::chrono::system_clock::now().time_since_epoch().count());
             width = random_image_dimension();
             height = random_image_dimension();
             for (int i = 0; i < width * height * 3; i++) {
