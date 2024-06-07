@@ -57,14 +57,14 @@ struct Image
     unsigned int max_value{};
     std::vector<Pixel<Value_type, channels>> pixels{};
 
-    unsigned int&
-    get_width()
+    unsigned int
+    get_width() const
     {
         return width;
     }
 
-    unsigned int&
-    get_height()
+    unsigned int
+    get_height() const
     {
         return height;
     }
@@ -73,22 +73,18 @@ struct Image
     read_png(std::string filename)
     {
         std::vector<unsigned char> image;
-        unsigned int w, h;
-        unsigned int error = lodepng::decode(image, w, h, filename, LCT_RGB, 8);
+        unsigned int error = lodepng::decode(image, width, height, filename, LCT_RGB, 8);
         if (error)
             throw std::runtime_error("decoder error " + std::to_string(error) + ": " + lodepng_error_text(error));
-        else{
-            get_width() = w;
-            get_height() = h;
-            pixels.clear();
-            pixels.reserve(width * height);
-            for (int i = 0; i < width * height * channels; i+=channels){
-                Pixel<Value_type, channels> p;
-                for (int j = 0; j < channels; j++) {
-                    p.values.push_back(image[i + j]);
-                }
-                pixels.push_back(p);
+
+        pixels.clear();
+        pixels.reserve(width * height);
+        for (int i = 0; i < width * height * channels; i+=channels){
+            Pixel<Value_type, channels> p;
+            for (int j = 0; j < channels; j++) {
+                p.values.push_back(image[i + j]);
             }
+            pixels.push_back(p);
         }
     }
 
