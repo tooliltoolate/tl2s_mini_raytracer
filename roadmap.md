@@ -21,3 +21,11 @@ Before doing any ray-tracing, a few tools are needed.
   We also need points. Think how you can handle this data type with as little code duplication as possible. Might not be require to build a class explicitly
 - [x] Ray
   In a renderer, we want to be able to track rays through 3D space. A ray is a origin, and a direction. Make a classs for it. Add a method `Point at(double t)` which computes `origin + t * direction`.
+
+### Camera
+
+- [ ] Camera class
+
+### Scene
+
+### Rigid bodies
