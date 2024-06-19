@@ -25,6 +25,15 @@ Before doing any ray-tracing, a few tools are needed.
 ### Camera
 
 - [ ] Camera class - see `resources/camera.md` for details
+- [ ] Do a small rendering loop which sends a ray from the camera center through the center of each pixel and calls a `ray_color` function on this ray.
+- [ ] Write the results to an image
+- [ ] Use the following implementation for `ray_color` to output a nice vertical gradient
+
+``` color ray_color(const ray& r) {
+    vec3 unit_direction = unit_vector(r.direction());
+    auto a = 0.5*(unit_direction.y() + 1.0);
+    return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
+}```
 
 ### Scene
 
