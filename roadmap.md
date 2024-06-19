@@ -24,7 +24,7 @@ Before doing any ray-tracing, a few tools are needed.
 
 ### Camera
 
-- [ ] Camera class
+- [ ] Camera class - see `resources/camera.md` for details
 
 ### Scene
 
